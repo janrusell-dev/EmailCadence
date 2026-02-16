@@ -11,7 +11,7 @@ async function run() {
       connection,
       namespace: process.env.TEMPORAL_NAMESPACE || "default",
       taskQueue: process.env.TEMPORAL_TASK_QUEUE || "email-cadence",
-      workflowsPath: require.resolve("./workflow  "),
+      workflowsPath: require.resolve("./workflow"),
       activities,
     });
 
