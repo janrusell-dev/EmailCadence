@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "ts-node src/worker.ts",
+    "build": "tsc",
+    "start": "node dist/worker.js"
   },
   "keywords": [],
   "author": "",
@@ -13,7 +16,8 @@
     "@temporalio/activity": "^1.14.1",
     "@temporalio/client": "^1.14.1",
     "@temporalio/worker": "^1.14.1",
-    "@temporalio/workflow": "^1.14.1"
+    "@temporalio/workflow": "^1.14.1",
+    "shared": "workspace:^"
   },
   "devDependencies": {
     "@types/node": "^25.2.3",

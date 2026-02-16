@@ -6,36 +6,10 @@ import {
   sleep,
 } from "@temporalio/workflow";
 import type * as activities from "./activities";
-
+import type { CadenceStep, WorkflowState, WorkflowInput } from "shared";
 const { sendEmail } = proxyActivities<typeof activities>({
   startToCloseTimeout: "1 minute",
 });
-
-export interface CadenceStep {
-  id: string;
-  type: "SEND_EMAIL" | "WAIT";
-  subject?: string;
-  body?: string;
-  seconds?: number;
-}
-
-export interface CadencePayload {
-  id: string;
-  name: string;
-  steps: CadenceStep[];
-}
-
-export interface WorkflowInput {
-  cadenceId: string;
-  contactEmail: string;
-  steps: CadenceStep[];
-}
-
-export interface WorkflowState {
-  currentStepIndex: number;
-  stepsVersion: number;
-  status: "RUNNING" | "COMPLETED" | "FAILED";
-}
 
 export const getStateQuery = defineQuery<WorkflowState>("getState");
 export const updateCadenceSignal =
@@ -69,14 +43,14 @@ export async function cadenceWorkflow(input: WorkflowInput): Promise<String> {
     while (currentStepIndex < steps.length && status === "RUNNING") {
       const step = steps[currentStepIndex];
 
-      if (step.type === "SEND_EMAIL") {
+      if (step && step.type === "SEND_EMAIL") {
         console.log(`📧 Sending email: "${step.subject}"`);
         await sendEmail({
           to: input.contactEmail,
           subject: step.subject || "No subject",
           body: step.body || "No body",
         });
-      } else if (step.type === "WAIT") {
+      } else if (step?.type === "WAIT") {
         const seconds = step.seconds || 0;
         await sleep(seconds * 1000);
       }

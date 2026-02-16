@@ -7,8 +7,8 @@ import { UpdateEnrollmentsCadenceDto } from './dto/update-enrollments-cadence.dt
 export class EnrollmentsController {
   constructor(private readonly enrollmentService: EnrollmentsService) {}
   @Post()
-  createEnrollment(@Body() createEnrollmentsDto: CreateEnrollmentDto) {
-    return this.enrollmentService.createEnrollment(createEnrollmentsDto);
+  createEnrollment(@Body() dto: CreateEnrollmentDto) {
+    return this.enrollmentService.createEnrollment(dto);
   }
 
   @Get(':id')
@@ -16,14 +16,11 @@ export class EnrollmentsController {
     return this.enrollmentService.getEnrollment(id);
   }
 
-  @Put(':id/update-cadence')
+  @Post(':id/update-cadence')
   updateCadenceInFlight(
     @Param('id') id: string,
-    @Body() updateEnrollmentsCadenceDto: UpdateEnrollmentsCadenceDto,
+    @Body() dto: UpdateEnrollmentsCadenceDto,
   ) {
-    return this.enrollmentService.updateCadenceInFlight(
-      id,
-      updateEnrollmentsCadenceDto,
-    );
+    return this.enrollmentService.updateCadenceInFlight(id, dto);
   }
 }
