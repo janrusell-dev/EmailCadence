@@ -38,7 +38,15 @@ export function useEnrollment() {
 
     const interval = setInterval(async () => {
       const state = await getEnrollment(enrollment.id);
-      setEnrollment(state);
+      setEnrollment((prev) => {
+        if (!prev) return state;
+        return {
+          ...prev,
+          status: state.status,
+          currentStepIndex: state.currentStepIndex,
+          stepsVersion: state.stepsVersion,
+        };
+      });
     }, 3000);
 
     return () => clearInterval(interval);
@@ -50,7 +58,16 @@ export function useEnrollment() {
     try {
       const res = await updateCadence(enrollment.id, steps);
 
-      setEnrollment(res);
+      setEnrollment((prev) => {
+        if (!prev) return res;
+        return {
+          ...prev,
+          status: res.status,
+          currentStepIndex: res.currentStepIndex,
+          stepsVersion: res.stepsVersion,
+          steps: prev.steps,
+        };
+      });
 
       toast.success("Cadence updated successfully!");
     } catch (e) {

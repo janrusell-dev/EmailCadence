@@ -1,135 +1,193 @@
-# Turborepo starter
+<a name="readme-top"></a>
 
-This Turborepo starter is maintained by the Turborepo core team.
+# Email Cadence
 
-## Using this example
+<p align="center"> <a href="https://github.com/janrusell-dev/EmailCadence"> </a> <h3 align="center">Email Cadence</h3> <p align="center"> A TypeScript monorepo for creating and running email workflows with Temporal.io. <br /> <a href="https://github.com/janrusell-dev/EmailCadence"><strong>Explore the repo »</strong></a> </p> </p>
 
-Run the following command:
+## Table of Contents
 
-```sh
-npx create-turbo@latest
+- [About The Project](#about-the-project)
+- [Built With](#built-with)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+- [Usage](#usage)
+- [Project Structure](#project-structure)
+- [Monorepo Scripts](#monorepo-scripts)
+
+---
+
+## About The Project
+
+Email Cadence is a monorepo TypeScript project to:
+
+- Create an email cadence with multiple steps (SEND_EMAIL, WAIT).
+
+- Enroll contacts and execute workflows sequentially.
+
+- Update running cadences in real-time — workflows adapt automatically.
+
+- Mock email sending (no real emails are sent).
+
+**Tech stack:** Next.js (frontend), NestJS (API), Temporal.io (worker), Turborepo (monorepo), PNPM (package management).
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+---
+
+## Built With
+
+- ![Next.js](https://img.shields.io/badge/Next.js-black?style=for-the-badge&logo=next.js&logoColor=white) – Frontend framework
+- ![React](https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black) + ![Tailwind](https://img.shields.io/badge/Tailwind%20CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white) / ![ShadCN](https://img.shields.io/badge/ShadCN-8B5CF6?style=for-the-badge&logo=shadcn&logoColor=white) – UI components
+- ![NestJS](https://img.shields.io/badge/NestJS-E0234E?style=for-the-badge&logo=nestjs&logoColor=white) – API framework
+- ![Temporal](https://img.shields.io/badge/Temporal-F4B400?style=for-the-badge&logo=temporal&logoColor=white) – Workflow engine
+- ![Turborepo](https://img.shields.io/badge/Turborepo-000000?style=for-the-badge&logo=turborepo&logoColor=white) – Monorepo management
+- ![PNPM](https://img.shields.io/badge/PNPM-F69220?style=for-the-badge&logo=pnpm&logoColor=white) – Package management
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## Getting Started
+
+Follow these steps to run the project locally.
+
+### Prerequisites
+
+- Node.js >= 20
+
+- PNPM >= 9
+
+- Temporal.io server (local or remote)
+
+```bash
+npm install -g pnpm@latest
 ```
 
-## What's inside?
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-This Turborepo includes the following packages/apps:
+### Installation
 
-### Apps and Packages
+1. Clone the repository:
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
+```bash
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-### Build
-
-To build all apps and packages, run the following command:
-
-```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build
-
-# Without [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build
-yarn dlx turbo build
-pnpm exec turbo build
+git clone https://github.com/janrusell-dev/EmailCadence.git
+cd EmailCadence
 ```
 
-You can build a specific package by using a [filter](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters):
+2. Install dependencies:
 
-```
-# With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build --filter=docs
-
-# Without [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build --filter=docs
-yarn exec turbo build --filter=docs
-pnpm exec turbo build --filter=docs
+```bash
+pnpm install
 ```
 
-### Develop
+3. Configure Temporal.io in a .env file (API & Worker apps):
 
-To develop all apps and packages, run the following command:
-
-```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev
-
-# Without [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev
-yarn exec turbo dev
-pnpm exec turbo dev
+```env
+TEMPORAL_NAMESPACE=default
+TEMPORAL_TASK_QUEUE=email-cadence
+TEMPORAL_SERVER_ADDRESS=localhost:7233
 ```
 
-You can develop a specific package by using a [filter](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters):
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-```
-# With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev --filter=web
+## Usage
 
-# Without [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev --filter=web
-yarn exec turbo dev --filter=web
-pnpm exec turbo dev --filter=web
+1. Run the monorepo:
+
+```bash
+pnpm dev
 ```
 
-### Remote Caching
+2. Individual apps:
 
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
-
-Turborepo can use a technique known as [Remote Caching](https://turborepo.dev/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
-
-```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended)
-turbo login
-
-# Without [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation), use your package manager
-npx turbo login
-yarn exec turbo login
-pnpm exec turbo login
-```
-
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
+```bash
+pnpm dev:web # Next.js frontend
+pnpm dev:api # NestJS API
+pnpm dev:worker # Temporal.io Worker
+pnpm dev:temporal # Start Temporal.io server locally
 
 ```
-# With [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation) installed (recommended)
-turbo link
 
-# Without [global `turbo`](https://turborepo.dev/docs/getting-started/installation#global-installation), use your package manager
-npx turbo link
-yarn exec turbo link
-pnpm exec turbo link
+### API Examples
+
+#### Create a cadence (POST /cadences)
+
+```json
+{
+  "id": "cad_123",
+  "name": "Welcome Flow",
+  "steps": [
+    { "id": "1", "type": "SEND_EMAIL", "subject": "Welcome", "body": "Hello!" },
+    { "id": "2", "type": "WAIT", "seconds": 10 },
+    {
+      "id": "3",
+      "type": "SEND_EMAIL",
+      "subject": "Follow up",
+      "body": "Checking in"
+    }
+  ]
+}
 ```
 
-## Useful Links
+#### Enroll a contact (POST /enrollments)
 
-Learn more about the power of Turborepo:
+```json
+{
+  "cadenceId": "cad_123",
+  "contactEmail": "user@example.com"
+}
+```
 
-- [Tasks](https://turborepo.dev/docs/crafting-your-repository/running-tasks)
-- [Caching](https://turborepo.dev/docs/crafting-your-repository/caching)
-- [Remote Caching](https://turborepo.dev/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.dev/docs/crafting-your-repository/running-tasks#using-filters)
-- [Configuration Options](https://turborepo.dev/docs/reference/configuration)
-- [CLI Usage](https://turborepo.dev/docs/reference/command-line-reference)
+#### Poll enrollment state (GET /enrollments/:id)
+
+Returns currentStepIndex, status, and stepsVersion.
+
+#### Update a running cadence (POST /enrollments/:id/update-cadence)
+
+```json
+{
+  "steps": [
+    {
+      "id": "1",
+      "type": "SEND_EMAIL",
+      "subject": "Updated Email",
+      "body": "Hello!"
+    }
+  ]
+}
+```
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## Project Structure
+
+```bash
+EmailCadence/
+├── apps/
+│   ├── web/      # Next.js frontend
+│   ├── api/      # NestJS API
+│   └── worker/   # Temporal.io Worker
+├── packages/shared/
+├── package.json
+├── tsconfig.base.json
+├── turbo.json
+└── README.md
+```
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## Monorepo Scripts
+
+| Script       | Description                         |
+| ------------ | ----------------------------------- |
+| dev          | Run web + api + worker concurrently |
+| dev:web      | Start Next.js frontend              |
+| dev:api      | Start NestJS API                    |
+| dev:worker   | Start Temporal.io worker            |
+| dev:temporal | Start Temporal.io server locally    |
+| build        | Build all apps via Turborepo        |
+| lint         | Run linters via Turborepo           |
+| format       | Prettier code formatting            |
+| check-types  | TypeScript type check via Turborepo |
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
