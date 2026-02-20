@@ -1,8 +1,14 @@
 <a name="readme-top"></a>
 
-# Email Cadence
+<h1 align="center">Email Cadence</h1>
 
-<p align="center"> <a href="https://github.com/janrusell-dev/EmailCadence"> </a> <h3 align="center">Email Cadence</h3> <p align="center"> A TypeScript monorepo for creating and running email workflows with Temporal.io. <br /> <a href="https://github.com/janrusell-dev/EmailCadence"><strong>Explore the repo »</strong></a> </p> </p>
+<p align="center">
+  A TypeScript monorepo for creating and running email workflows with Temporal.io.
+  <br />
+  <a href="https://github.com/janrusell-dev/EmailCadence">
+    <strong>Explore the repo »</strong>
+  </a>
+</p>
 
 ## Table of Contents
 
@@ -56,10 +62,20 @@ Follow these steps to run the project locally.
 
 - PNPM >= 9
 
-- Temporal.io server (local or remote)
+- Temporal CLI (required to run workflows locally)
 
 ```bash
 npm install -g pnpm@latest
+```
+
+#### Install Temporal CLI
+
+Refer to the official [Temporal CLI installation guide](https://temporal.io/setup/install-temporal-cli).
+
+After installation, start the local Temporal server:
+
+```bash
+temporal server start-dev
 ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
