@@ -5,5 +5,6 @@ import { CadencesController } from './cadences.controller';
 @Module({
   providers: [CadencesService],
   controllers: [CadencesController],
+  exports: [CadencesService],
 })
 export class CadencesModule {}

@@ -1,11 +1,12 @@
-import { IsArray, IsNotEmpty, IsString } from 'class-validator';
+import { IsArray, IsEnum, IsNotEmpty, IsString } from 'class-validator';
+import { StepType } from 'shared';
 
 export class CadenceStepDto {
   @IsString()
   id: string;
 
-  @IsString()
-  type: 'SEND_EMAIL' | 'WAIT';
+  @IsEnum(StepType)
+  type: StepType;
 
   @IsString()
   subject?: string;
