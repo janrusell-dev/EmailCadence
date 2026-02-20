@@ -1,6 +1,8 @@
+import { StepType, WorkflowStatus } from "../enums/workflow.enums";
+
 export interface CadenceStep {
   id: string;
-  type: "SEND_EMAIL" | "WAIT";
+  type: StepType;
   subject?: string;
   body?: string;
   seconds?: number;
@@ -19,7 +21,7 @@ export interface Enrollment {
   workflowId: string;
   currentStepIndex: number;
   stepsVersion: number;
-  status: "RUNNING" | "COMPLETED" | "FAILED";
+  status: WorkflowStatus;
   steps: CadenceStep[];
   createdAt: Date;
   updatedAt: Date;
@@ -28,7 +30,7 @@ export interface Enrollment {
 export interface WorkflowState {
   currentStepIndex: number;
   stepsVersion: number;
-  status: "RUNNING" | "COMPLETED" | "FAILED";
+  status: WorkflowStatus;
 }
 
 export interface WorkflowInput {

@@ -1,21 +1,18 @@
-import Image, { type ImageProps } from "next/image";
-
-type Props = Omit<ImageProps, "src"> & {
-  srcLight: string;
-  srcDark: string;
-};
-
-// const ThemeImage = (props: Props) => {
-//   const { srcLight, srcDark, ...rest } = props;
-
-//   return (
-//     <>
-//       <Image {...rest} src={srcLight} className="imgLight" />
-//       <Image {...rest} src={srcDark} className="imgDark" />
-//     </>
-//   );
-// };
+import Link from "next/link";
 
 export default function Home() {
-  return <div>Hello</div>;
+  return (
+    <div className="p-20 space-y-4 text-center">
+      <h1 className="text-4xl font-bold">Email Cadence Dashboard</h1>
+
+      <div className="space-x-10">
+        <Link href="/cadence" className="text-xl text-red-500">
+          Cadence Editor
+        </Link>
+        <Link href="/enrollments" className="text-xl text-red-500">
+          Enrollments
+        </Link>
+      </div>
+    </div>
+  );
 }

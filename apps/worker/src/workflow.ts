@@ -6,7 +6,9 @@ import {
   sleep,
 } from "@temporalio/workflow";
 import type * as activities from "./activities";
-import type { CadenceStep, WorkflowState, WorkflowInput } from "shared";
+import { CadenceStep, WorkflowState, WorkflowInput } from "shared";
+import { WorkflowStatus } from "shared/enums/workflow.enums";
+
 const { sendEmail } = proxyActivities<typeof activities>({
   startToCloseTimeout: "1 minute",
 });
@@ -16,10 +18,10 @@ export const updateCadenceSignal =
   defineSignal<[CadenceStep[]]>("updateCadence");
 
 export async function cadenceWorkflow(input: WorkflowInput): Promise<String> {
-  let steps = input.steps;
+  let steps: CadenceStep[] = input.steps;
   let currentStepIndex = 0;
   let stepsVersion = 1;
-  let status: "RUNNING" | "COMPLETED" | "FAILED" = "RUNNING";
+  let status: WorkflowState["status"] = WorkflowStatus.RUNNING;
 
   setHandler(
     getStateQuery,
@@ -32,7 +34,7 @@ export async function cadenceWorkflow(input: WorkflowInput): Promise<String> {
 
   setHandler(updateCadenceSignal, (newSteps: CadenceStep[]) => {
     if (newSteps.length <= currentStepIndex) {
-      status = "COMPLETED";
+      status = WorkflowStatus.COMPLETED;
     } else {
       steps = newSteps;
     }
@@ -58,11 +60,11 @@ export async function cadenceWorkflow(input: WorkflowInput): Promise<String> {
       currentStepIndex++;
     }
 
-    status = "COMPLETED";
+    status = WorkflowStatus.COMPLETED;
 
     return `Cadence ${input.cadenceId} completed for ${input.contactEmail}`;
   } catch (error) {
-    status = "FAILED";
+    status = WorkflowStatus.FAILED;
     throw error;
   }
 }
