@@ -7,12 +7,12 @@ import { UpdateEnrollmentsCadenceDto } from './dto/update-enrollments-cadence.dt
 export class EnrollmentsController {
   constructor(private readonly enrollmentService: EnrollmentsService) {}
   @Post()
-  createEnrollment(@Body() dto: CreateEnrollmentDto) {
+  async createEnrollment(@Body() dto: CreateEnrollmentDto) {
     return this.enrollmentService.createEnrollment(dto);
   }
 
   @Get(':id')
-  getEnrollment(@Param('id') id: string): string {
+  async getEnrollment(@Param('id') id: string) {
     return this.enrollmentService.getEnrollment(id);
   }
 
